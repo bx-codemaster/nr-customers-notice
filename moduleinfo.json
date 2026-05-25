@@ -1,0 +1,29 @@
+{
+    "name": "NR Customers Notice",
+    "archiveName": "bx-codemaster/nr-customers-notice",
+    "category": "productivity",
+    "developer": "Axel Benkert",
+    "developerWebsite": "https://www.bx-coding.de",
+    "website": "https://www.revilonetz.de",
+    "srcDir": "shoproot",
+    "version": "auto",
+    "shortDescription": "Kundeninformations-System! Aktuelle Informationen direkt im Shop anzeigen.",
+    "description": "Mit dieser Erweiterung besteht die Möglichkeit den Kunden im Shop zu informieren. Der Hinweis kann auf einen bestimmten Zeitraum begrenzt werden und/oder auf nur für spezische Kundengruppen und/oder nur auf bestimmten Seiten angezeigt werden und/oder nur Kunden die noch kein Newsletterempfänger sind. Mit Hilfe verschiedener Templates können die Hinweise unterschiedlich angezeigt werden.",
+    "price": "free", 
+    "date": "2026-05-25 00:00:00",
+    "php": {
+      "version": "^7.4 || ^8.0"
+    },
+    "modifiedCompatibility": [
+      "3.1.0",
+      "3.1.1",
+      "3.1.2",
+      "3.1.3",
+      "3.1.4",
+      "3.1.5",
+      "3.1.6",
+      "3.2.0",
+      "3.2.1",
+      "3.3.0"
+    ]
+}
