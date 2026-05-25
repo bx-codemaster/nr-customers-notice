@@ -73,7 +73,15 @@
   }
 
   .customer-notices-country-filter {
+    display: block;
+    padding-left: 8px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 2.0;
     margin-bottom: 6px;
+    border-radius: 2px;
   }
 
   .customer-notices-country-links {

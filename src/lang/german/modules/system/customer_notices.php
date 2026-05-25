@@ -28,8 +28,9 @@
     <h3 style="margin-top: 0;">Kundenhinweise im Shop verwalten</h3>
     <p>Mit diesem Modul können zeitgesteuerte Kundenhinweise zentral verwaltet werden. Hinweise lassen sich gezielt nach Kundengruppen, Seiten, Ländern und optional einzelnen Kunden ausspielen.</p>';
 
-  if (basename($_SERVER['PHP_SELF']) == 'module_export.php') { 
-    $description .= '<p><a class="button btnbox but_red" style="text-align:center;" onclick="return confirmLink(\'Alle Dateien löschen?\', \'\' ,this);" href="'.xtc_href_link(FILENAME_MODULE_EXPORT, 'set=system&module=customer_notices&action=custom').'">Alle Moduldateien löschen</a></p>';
+  if (basename($_SERVER['PHP_SELF']) == 'module_export.php' && 
+  (!defined('MODULE_CUSTOMER_NOTICES_STATUS') || (defined('MODULE_CUSTOMER_NOTICES_STATUS') && MODULE_CUSTOMER_NOTICES_STATUS !== 'True'))) { 
+    $description .= '<p><a class="button btnbox but_red" style="text-align:center;" onclick="return confirmLink(\'Alte Moduldateien löschen?\', \'\' ,this);" href="'.xtc_href_link(FILENAME_MODULE_EXPORT, 'set=system&module=customer_notices&action=custom&task=delete_old_files').'">Alte Moduldateien löschen?</a></p>';
   }
   $description .= '</div></details>';
 

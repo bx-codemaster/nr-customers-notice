@@ -149,22 +149,23 @@ switch ($action) {
     }
 
     // check values
-    $activeLanguageId = (int)$_SESSION['languages_id'];
-    $requestTitle = isset($_REQUEST['title'][$activeLanguageId]) ? trim((string)$_REQUEST['title'][$activeLanguageId]) : '';
+    $activeLanguageId   = (int)$_SESSION['languages_id'];
+    $requestTitle       = isset($_REQUEST['title'][$activeLanguageId]) ? trim((string)$_REQUEST['title'][$activeLanguageId]) : '';
     $requestDescription = isset($_REQUEST['description'][$activeLanguageId]) ? trim((string)$_REQUEST['description'][$activeLanguageId]) : '';
-    $requestStartdate = isset($_REQUEST['startdate']) ? trim((string)$_REQUEST['startdate']) : '';
-    $requestEnddate = isset($_REQUEST['enddate']) ? trim((string)$_REQUEST['enddate']) : '';
+    $requestStartdate   = isset($_REQUEST['startdate']) ? trim((string)$_REQUEST['startdate']) : '';
+    $requestEnddate     = isset($_REQUEST['enddate']) ? trim((string)$_REQUEST['enddate']) : '';
 
     if ($requestTitle === '') {
       $messageStack->add(ERROR_MISSING_TITLE, 'error');
     }
+
     if ($requestDescription === '') {
       $messageStack->add(ERROR_MISSING_DESCRIPTION, 'error');
     }
+    
     //BOC different format because of datetimepicker, noRiddle
-    //$datetimeFormat = '#^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}\s[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}$#';
     $datetimeFormat2 = '#^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}\s[0-9]{1,2}:[0-9]{1,2}[:]*[0-9]{0,2}$#'; //new format because of use of datepicker without seconds, noRiddle
-    //if ('' != trim($_REQUEST['startdate']) && !preg_match($datetimeFormat, $_REQUEST['startdate'])) {
+    
     if ($requestStartdate !== '' && !preg_match($datetimeFormat2, $requestStartdate)) {
       $messageStack->add(ERROR_INVALID_STARTDATE, 'error');
     }
@@ -404,8 +405,8 @@ if (USE_WYSIWYG == 'true') {
                               <td class="dataTableContent">
                                 <?php 
                                   $values = array(
-                                    array('id' => 1, 'text' => YES),
                                     array('id' => 0, 'text' => NO),
+                                    array('id' => 1, 'text' => YES),
                                   );
                                   //$GLOBALS['status'] = $notice['status']; // fix to select default value //what is this for ?, 01-2022, noRiddle
                                   echo xtc_draw_pull_down_menu('status', $values, (isset($notice['status']) ? $notice['status'] : ''));
@@ -562,12 +563,12 @@ if (USE_WYSIWYG == 'true') {
 <?php echo xtc_draw_form('status', FILENAME_CUSTOMER_NOTICES, '', 'get'); ?>
 <?php
    $select_data = array(
-        array('id' => '', 'text' => TEXT_SELECT),
+        array('id' => '', 'text' => TEXT_ALL),
         array('id' => '1', 'text' => TEXT_ACTIVE),
         array('id' => '0', 'text' => TEXT_INACTIVE),
        );
       echo HEADING_TITLE_STATUS . ' ';
-      echo xtc_draw_pull_down_menu('status', $select_data, isset($_GET['status']) ? $_GET['status'] : '', 'onChange="this.form.submit();"');
+      echo xtc_draw_pull_down_menu('status', $select_data, isset($_GET['status']) ? $_GET['status'] : '', 'onChange="this.form.submit();" style="min-width: 150px;"');
 ?>
 </form>
 </div>
@@ -821,7 +822,6 @@ if (USE_WYSIWYG == 'true') {
       } else {
         $heading[] = array('text' => '<b>' . HEADING_TITLE . '</b>');
         $contents[] = array('text' => TEXT_NO_CUSTOMER_NOTICES);
-        $contents[] = array('text' => TEXT_INSTALL_REMARKS);
 
 				echo '            <td class="boxRight">' . "\n";
 				$box = new box;

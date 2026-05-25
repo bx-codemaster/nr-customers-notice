@@ -156,7 +156,100 @@
 		$this->installCountdownLanguageVariables();
 	}
 
-	public function update(): void {}
+	public function update() {
+		$action = isset($_GET['action']) ? (string)$_GET['action'] : '';
+
+		if (!in_array($action, array('dele_old-Files', 'delete_old_files'), true)) {
+			return '';
+		}
+
+		$result = $this->deleteLegacyModuleFiles();
+
+		if (!empty($result['failed'])) {
+			return 'Es konnten nicht alle Altdateien des Vorgängermoduls gelöscht werden. Bitte Dateirechte prüfen.';
+		}
+
+		if (empty($result['deleted'])) {
+			return 'Es wurden keine Altdateien des Vorgängermoduls gefunden.';
+		}
+
+		return count($result['deleted']) . ' Altdateien des Vorgängermoduls wurden gelöscht.';
+	}
+
+	private function deleteLegacyModuleFiles(): array {
+		$deletedFiles = array();
+		$failedFiles  = array();
+
+		foreach ($this->getLegacyModuleFiles() as $file) {
+			if (!is_file($file)) {
+				continue;
+			}
+
+			if (!is_writable($file) || @unlink($file) === false) {
+				$failedFiles[] = $file;
+				continue;
+			}
+
+			$deletedFiles[] = $file;
+		}
+
+		$this->removeEmptyLegacyDirectories();
+
+		return array(
+			'deleted' => $deletedFiles,
+			'failed' => $failedFiles,
+		);
+	}
+
+	private function getLegacyModuleFiles(): array {
+		$files = array(
+			DIR_FS_ADMIN . 'customers_notice.php',
+			DIR_FS_ADMIN . 'includes/extra/filenames/customers_notice.php',
+			DIR_FS_ADMIN . 'includes/extra/menu/customers_notice.php',
+			DIR_FS_CATALOG . 'includes/external/customers_notice/classes/CustomersNoticeManager.class.php',
+			DIR_FS_CATALOG . 'includes/extra/database_tables/customers_notice.php',
+			DIR_FS_CATALOG . 'includes/extra/filenames/customers_notice.php',
+			DIR_FS_CATALOG . 'includes/extra/header/header_body/customers_notice.php',
+			DIR_FS_CATALOG . 'includes/extra/wysiwyg/customers_notice.php',
+			DIR_FS_CATALOG . 'lang/german/admin/customers_notice.php',
+			DIR_FS_CATALOG . 'lang/english/admin/customers_notice.php',
+		);
+
+		$template = $this->getCurrentTemplate();
+		if ($template !== '') {
+			$files[] = DIR_FS_CATALOG . 'templates/' . $template . '/css/customers_notice.css';
+			$files[] = DIR_FS_CATALOG . 'templates/' . $template . '/module/customers_notice/countdown.html';
+			$files[] = DIR_FS_CATALOG . 'templates/' . $template . '/module/customers_notice/default.html';
+			$files[] = DIR_FS_CATALOG . 'templates/' . $template . '/module/customers_notice/newsletter.html';
+		}
+
+		return $files;
+	}
+
+	private function removeEmptyLegacyDirectories(): void {
+		$directories = array(
+			DIR_FS_CATALOG . 'includes/external/customers_notice/classes',
+			DIR_FS_CATALOG . 'includes/external/customers_notice',
+		);
+
+		$template = $this->getCurrentTemplate();
+		if ($template !== '') {
+			$directories[] = DIR_FS_CATALOG . 'templates/' . $template . '/module/customers_notice';
+		}
+
+		foreach ($directories as $directory) {
+			if (!is_dir($directory) || !is_writable($directory)) {
+				continue;
+			}
+
+			$directoryItems = scandir($directory);
+			if ($directoryItems === false || count($directoryItems) > 2) {
+				continue;
+			}
+
+			@rmdir($directory);
+		}
+	}
 
 	private function installCountdownLanguageVariables(): void {
 		foreach ($this->getCountdownLanguageFiles() as $file => $block) {

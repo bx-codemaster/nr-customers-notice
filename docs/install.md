@@ -19,7 +19,7 @@
 
 1. Backup von Datenbank und Shop erstellen.
 
-2. Den vollständigen Inhalt des Ordners shoproot in den Shoproot kopieren. Es werden keine Dateien überschrieben.
+2. Den vollständigen Inhalt des Ordners src in den Shoproot Ihres Servers kopieren. Es werden keine Dateien überschrieben.
 
    Hinweis:
    Den Ordner admin manuell zuweisen, falls der Name des Adminverzeichnisses geändert wurde.

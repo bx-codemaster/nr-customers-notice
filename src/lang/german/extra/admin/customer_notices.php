@@ -72,33 +72,3 @@ define('FIELD_VALUE_SEL_COUNTRY', 'Land wählen'); //for new feature "restrict t
 define('TEXT_COUNTRIES_FILTER', 'Länder filtern');
 define('TEXT_COUNTRIES_SELECT_ALL', 'Alle sichtbaren wählen');
 define('TEXT_COUNTRIES_CLEAR', 'Auswahl leeren');
-
-define('TEXT_INSTALL_REMARKS', '<p><strong>Für eine vollständige Installation sind noch einige manuelle Schritte notwendig:</strong></p>
-<ol>
-   <li>
-      In [SHOP_ROOT]/templates/[DEIN_TEMPLATE]/index.html an der gewünschten Stelle einfügen:<br><br>
-      <small>Empfehlung: direkt oberhalb von {if isset($main_content)}{$main_content}{/if}</small><br><br>
-      <code>{* BOF - Timo Paul (mail[at]timopaul[dot]biz) - 2014-06-22 - customerNotices *}<br>
-      {if isset($CUSTOMER_NOTICES)}{$CUSTOMER_NOTICES}{/if}<br>
-      {* EOF - Timo Paul (mail[at]timopaul[dot]biz) - 2014-06-22 - customerNotices *}</code><br><br>
-   </li>
-   <li>
-      In [SHOP_ROOT]/templates/[DEIN_TEMPLATE]/css/general_bottom.css.php nach
-      <code>DIR_TMPL_CSS.\'jquery.colorbox.css\',</code>
-      diese Zeile ergänzen:<br>
-      <code>DIR_TMPL_CSS.\'customer_notices.css\',</code><br><br>
-   </li>
-   <li>
-      In /templates/[DEIN_TEMPLATE]/lang/lang_[SPRACHE].custom folgende Sprachvariablen ergänzen:<br><br>
-      <strong>Deutsch</strong><br>
-      <code>csn_days = \'Tage\'<br>
-      csn_std = \'Stunden\'<br>
-      csn_min = \'Minuten\'<br>
-      csn_sec = \'Sekunden\'</code><br><br>
-      <strong>Englisch</strong><br>
-      <code>csn_days = \'days\'<br>
-      csn_std = \'hours\'<br>
-      csn_min = \'minutes\'<br>
-      csn_sec = \'seconds\'</code>
-   </li>
-</ol>');
