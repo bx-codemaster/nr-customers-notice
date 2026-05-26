@@ -11,6 +11,17 @@
 <link rel="stylesheet" href="includes/lang_tabs_menu/lang_tabs_menu.css">
 <?php } ?>
 <style>
+  .dataTableHeadingContent:first-child {
+    border-left: 1px solid #aaa;
+  }
+
+  .dataTableContent:first-child {
+    border-left: 1px solid #ddd;
+  }
+  .dataTableContent:last-child {
+    border-right: 1px solid #ddd;
+  }
+
   .dataTableContent {
     padding: 8px 2px;
   }
@@ -26,8 +37,7 @@
     border-collapse: collapse;
   }
 
-  .customer-notices-form-layout,
-  .customer-notices-list-inner {
+  .customer-notices-form-layout {
     width: 100%;
     border-collapse: collapse;
   }
@@ -36,12 +46,6 @@
     width: 860px;
     border-collapse: separate;
     border-spacing: 2px;
-  }
-
-  .customer-notices-list-table {
-    width: 100%;
-    margin-top: 15px;
-    border-collapse: collapse;
   }
 
   .customer-notices-langtabs {
@@ -55,15 +59,6 @@
 
   .customer-notices-actions {
     text-align: center;
-  }
-
-  .customer-notices-top {
-    vertical-align: top;
-  }
-
-  .customer-notices-col-id,
-  .customer-notices-col-position {
-    width: 40px;
   }
 
   .customer-notices-country-filter,
