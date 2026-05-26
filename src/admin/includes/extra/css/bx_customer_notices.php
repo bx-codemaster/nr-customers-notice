@@ -44,6 +44,36 @@
     border-right: 1px solid #ddd;
   }
 
+ .tableConfig.bx-table-config-3cols .col-left {
+    width: 30%;
+    vertical-align: top;
+    font-weight: normal;
+  }
+
+  .tableConfig.bx-table-config-3cols .col-middle {
+    width: 30%;
+    vertical-align: top;
+  }
+  .tableConfig.bx-table-config-3cols .col-right {
+    width: 40%;
+    vertical-align: top;
+  }
+
+  .tableConfig.bx-table-config-3cols h4 {
+    display: flex; 
+    align-items: baseline; 
+    justify-content: flex-start; 
+    gap: 8px; 
+    margin: 0 0 12px;
+  }
+
+  .tableConfig.bx-table-config-3cols h4 > .badge {
+    display: inline-block;
+    font-size: 11px; 
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
   .dataTableContent {
     padding: 8px 2px;
   }

@@ -56,6 +56,7 @@ define('TEXT_ALL', 'alle');
 define('TEXT_OPTIONAL', 'optional');
 define('TEXT_COUNTRIES_FILTER', 'Länder filtern');
 define('TEXT_COUNTRIES_SELECT_ALL', 'Alle sichtbaren wählen');
+define('TEXT_PAGES_SELECT_ALL', 'Alle');
 define('TEXT_COUNTRIES_CLEAR', 'Auswahl leeren');
 define('TEXT_EXPL_CUSTOMERS_ID', 'Wenn hier ein Eintrag vorhanden ist greifen die Features "Kundengruppe" und "Land des Kunden" unten nicht !!'); //for new feature "restrict to customers_id", 01-2022, noRiddle
 define('TEXT_CUSTOMER_NOTICES_CUSTOMER_SEARCH_PLACEHOLDER', 'Kunden suchen');
