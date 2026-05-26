@@ -1,6 +1,6 @@
 <?php
 /* -----------------------------------------------------------------------------------------
-	$Id: admin/includes/modules/system/customer_notices.php 1000 2026-05-25 12:00:00Z benax $
+	$Id: admin/includes/modules/system/bx_customer_notices.php 1000 2026-05-25 12:00:00Z benax $
 
    modified eCommerce Shopsoftware
    http://www.modified-shop.org
@@ -12,7 +12,7 @@
 
   defined( '_VALID_XTC' ) or die( 'Direct Access to this location is not allowed.' );
   
-	class customer_notices {
+	class bx_customer_notices {
 	public string $code;
 	public string $version;
 	public string $title;
@@ -23,12 +23,12 @@
 	public string $development_status; // 'p' = production ready, 'd' = in development
 
 	public function __construct() {
-	  $this->code        = 'customer_notices';
-	  $this->version     = '0.3.0';
-	  $this->title       = MODULE_CUSTOMER_NOTICES_TITLE;
-	  $this->description = MODULE_CUSTOMER_NOTICES_DESC;
-	  $this->sort_order  = defined('MODULE_CUSTOMER_NOTICES_SORT_ORDER') ? MODULE_CUSTOMER_NOTICES_SORT_ORDER : 0;
-	  $this->enabled     = ((defined('MODULE_CUSTOMER_NOTICES_STATUS') && MODULE_CUSTOMER_NOTICES_STATUS == 'True') ? true : false);
+	  $this->code        = 'bx_customer_notices';
+	  $this->version     = '1.0.0';
+	  $this->title       = MODULE_BX_CUSTOMER_NOTICES_TITLE;
+	  $this->description = MODULE_BX_CUSTOMER_NOTICES_DESC;
+	  $this->sort_order  = defined('MODULE_BX_CUSTOMER_NOTICES_SORT_ORDER') ? MODULE_BX_CUSTOMER_NOTICES_SORT_ORDER : 0;
+	  $this->enabled     = ((defined('MODULE_BX_CUSTOMER_NOTICES_STATUS') && MODULE_BX_CUSTOMER_NOTICES_STATUS == 'True') ? true : false);
 		$this->development_status = 'd';
   }
 
@@ -39,12 +39,12 @@
      * */
 	public function check(): bool {
       if (!isset($this->_check)) {
-				if (defined('MODULE_CUSTOMER_NOTICES_STATUS')) {
+				if (defined('MODULE_BX_CUSTOMER_NOTICES_STATUS')) {
           $this->_check = true;
         } else {
           $check_query = xtc_db_query("SELECT configuration_value 
                                          FROM " . TABLE_CONFIGURATION . " 
-																				WHERE configuration_key = 'MODULE_CUSTOMER_NOTICES_STATUS'");
+																				WHERE configuration_key = 'MODULE_BX_CUSTOMER_NOTICES_STATUS'");
           $this->_check = (xtc_db_num_rows($check_query) > 0);
         }
       }
@@ -81,7 +81,7 @@
 														sort_order, 
 														visible) 
 													VALUES ( ".$freeId["id"].", 
-														'NR Customers Notice Konfiguration', 
+														'BX Customer Notices Konfiguration', 
 														'Modul einstellen und konfigurieren',
 														".$freeSort["sort_order"].", 
 														1)");
@@ -93,7 +93,7 @@
 																														 date_added, 
 																														 use_function, 
 																														 set_function) 
-	                											VALUES ('MODULE_CUSTOMER_NOTICES_STATUS', 
+	                											VALUES ('MODULE_BX_CUSTOMER_NOTICES_STATUS', 
 																														'True', 
 																															'".$freeId["id"]."', 
 																														'1', 
@@ -108,7 +108,7 @@
 																														 date_added, 
 																														 use_function, 
 																														 set_function) 
-													                VALUES ('MODULE_CUSTOMER_NOTICES_VERSION', 
+													                VALUES ('MODULE_BX_CUSTOMER_NOTICES_VERSION', 
 																														'".$this->version."', 
 																															'".$freeId["id"]."', 
 																														'2', 
@@ -123,7 +123,7 @@
 																														 date_added, 
 																														 use_function, 
 																														 set_function) 
-	                											VALUES ('MODULE_CUSTOMER_NOTICES_CONFIG_ID', 
+	                											VALUES ('MODULE_BX_CUSTOMER_NOTICES_CONFIG_ID', 
 																															'".$freeId["id"]."', 
 																															'".$freeId["id"]."', 
 																														'3', 
@@ -131,7 +131,7 @@
 																														'', 
 																														'')");
 	
-		xtc_db_query ("CREATE TABLE IF NOT EXISTS ".TABLE_CUSTOMER_NOTICES." (
+		xtc_db_query ("CREATE TABLE IF NOT EXISTS ".TABLE_BX_CUSTOMER_NOTICES." (
 				customer_notice_id int(10) unsigned NOT NULL AUTO_INCREMENT,
 				customers_id INT(11) DEFAULT NULL,
 				status smallint(1) NOT NULL DEFAULT '0',
@@ -145,7 +145,7 @@
 				PRIMARY KEY (customer_notice_id));"
 		);
 	
-		xtc_db_query ("CREATE TABLE IF NOT EXISTS ".TABLE_CUSTOMER_NOTICES_DESCRIPTION." (
+		xtc_db_query ("CREATE TABLE IF NOT EXISTS ".TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION." (
 				customer_notice_id int(10) unsigned NOT NULL,
 				languages_id int(10) unsigned NOT NULL,
 				title varchar(255)DEFAULT NULL,
@@ -381,10 +381,10 @@
 		$this->removeCountdownLanguageVariables();
 
 	  xtc_db_query("DELETE FROM ".TABLE_CONFIGURATION." WHERE configuration_key in ('".implode("', '", $this->keys())."')");
-		xtc_db_query("DELETE FROM ".TABLE_CONFIGURATION_GROUP." WHERE configuration_group_title = 'NR Customers Notice Konfiguration'");
+		xtc_db_query("DELETE FROM ".TABLE_CONFIGURATION_GROUP." WHERE configuration_group_title = 'BX Customer Notices Konfiguration'");
 	  xtc_db_query("ALTER TABLE ".TABLE_ADMIN_ACCESS." DROP ".$this->code);
-	  xtc_db_query("DROP TABLE IF EXISTS ".TABLE_CUSTOMER_NOTICES);
-	  xtc_db_query("DROP TABLE IF EXISTS ".TABLE_CUSTOMER_NOTICES_DESCRIPTION);
+	  xtc_db_query("DROP TABLE IF EXISTS ".TABLE_BX_CUSTOMER_NOTICES);
+	  xtc_db_query("DROP TABLE IF EXISTS ".TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION);
   }
 
 	public function process(): void { }
@@ -406,9 +406,9 @@
 	  */
 	public function keys(): array {
 		$keys = array(
-			'MODULE_CUSTOMER_NOTICES_STATUS',
-			'MODULE_CUSTOMER_NOTICES_CONFIG_ID',
-			'MODULE_CUSTOMER_NOTICES_VERSION',
+			'MODULE_BX_CUSTOMER_NOTICES_STATUS',
+			'MODULE_BX_CUSTOMER_NOTICES_CONFIG_ID',
+			'MODULE_BX_CUSTOMER_NOTICES_VERSION',
 			);
 		return $keys;
   }	  

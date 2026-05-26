@@ -4,7 +4,7 @@
   $customerNoticesIsEdit      = isset($action) && in_array($action, array('new', 'edit'));
   $customerNoticesUseLangTabs = $customerNoticesIsEdit && (!defined('USE_ADMIN_LANG_TABS') || USE_ADMIN_LANG_TABS != 'false');
 
-  if (basename($_SERVER['PHP_SELF']) == 'customer_notices.php') {
+  if (basename($_SERVER['PHP_SELF']) == 'bx_customer_notices.php') {
 ?>
 <script src="includes/extra/javascript/select2.full.min.js"></script>
 

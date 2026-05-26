@@ -65,7 +65,7 @@
 
 - fix warnings and notices
 
-## v0.3.0 by benax
+## v1.0.0 by benax
 
 - migrated the module consistently from customers_notice to customer_notices across files, constants, classes, hooks and template paths
 - converted the package to a modern MMLC-ready module structure with docs, moduleinfo.json, modulehash.json and module assets

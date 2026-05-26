@@ -18,7 +18,7 @@
  * new feature "restrict to customer country", 10-2021, noRiddle
  * new feature restrict to customers_id if isset, 01-2022, noRiddle
  * 
- * Version 0.3.0
+ * Version 1.0.0
  */
 
 class CustomerNoticesManager {
@@ -65,8 +65,8 @@ class CustomerNoticesManager {
 
     //secure sql, added int cast to $_SESSION['languages_id'] below, noRiddle
         $stmt = "SELECT cn.*, cnd.title, cnd.description
-          FROM ".TABLE_CUSTOMER_NOTICES." AS cn
-        LEFT JOIN ".TABLE_CUSTOMER_NOTICES_DESCRIPTION." cnd
+          FROM ".TABLE_BX_CUSTOMER_NOTICES." AS cn
+        LEFT JOIN ".TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION." cnd
                  ON cn.customer_notice_id = cnd.customer_notice_id
                 AND cnd.languages_id = ".(int)$_SESSION['languages_id']."
               WHERE cn.status = 1";

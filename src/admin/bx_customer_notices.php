@@ -21,14 +21,12 @@
    (ALTER TABLE customer_notices ADD customers_id INT(11) DEFAULT NULL AFTER position;)
  * added Select2 customer search with AJAX and CSRF-safe POST requests, 05-2026, benax
  * improved customer override display for groups/countries and admin info labels, 05-2026, benax
- * moved helper functions to admin/includes/extra/functions/customer_notices.php, 05-2026, benax
+ * moved helper functions to admin/includes/extra/functions/bx_customer_notices.php, 05-2026, benax
    
- * Version 0.3.0
+ * Version 1.0.0
  */
 
 require_once 'includes/application_top.php';
-
-require_once DIR_FS_INC . 'xtc_wysiwyg.inc.php';
 
 if(!function_exists('xtc_get_country_name')) {
   require_once(DIR_FS_INC.'xtc_get_country_name.inc.php');
@@ -64,7 +62,7 @@ $notice = array(
 );
 
 if (key_exists('nid', $_GET) && '' != $_GET['nid']) {
-  $stmt = 'SELECT * FROM ' . TABLE_CUSTOMER_NOTICES . ' WHERE customer_notice_id = ' . xtc_db_input($_GET['nid']);
+  $stmt = 'SELECT * FROM ' . TABLE_BX_CUSTOMER_NOTICES . ' WHERE customer_notice_id = ' . xtc_db_input($_GET['nid']);
   $query = xtc_db_query($stmt);
 
   if ($row = xtc_db_fetch_array($query)) {
@@ -73,7 +71,7 @@ if (key_exists('nid', $_GET) && '' != $_GET['nid']) {
     $notice['pages'] = explode(',', $notice['pages']);
     $notice['countries'] = explode(',', $notice['countries']);
 
-    $stmt = 'SELECT * FROM ' . TABLE_CUSTOMER_NOTICES_DESCRIPTION . ' WHERE customer_notice_id = ' . xtc_db_input($_GET['nid']);
+    $stmt = 'SELECT * FROM ' . TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION . ' WHERE customer_notice_id = ' . xtc_db_input($_GET['nid']);
     $query = xtc_db_query($stmt);
     while ($row = xtc_db_fetch_array($query)) {
       $notice['lang'][$row['languages_id']] = $row;
@@ -206,7 +204,7 @@ switch ($action) {
     );
     
     xtc_db_perform(
-      TABLE_CUSTOMER_NOTICES,
+      TABLE_BX_CUSTOMER_NOTICES,
       $sqlData,
       ($update ? 'update' : 'insert'),
       ($update ? 'customer_notice_id = ' . (int)$notice['customer_notice_id'] : '')
@@ -218,7 +216,7 @@ switch ($action) {
 
     foreach ($notice['lang'] as $languages_id => $lang) {
       $csn_lng_entr_qu = xtc_db_query("SELECT * 
-                                         FROM ".TABLE_CUSTOMER_NOTICES_DESCRIPTION." 
+                                         FROM ".TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION." 
                                         WHERE languages_id = ".(int)$languages_id."
                                           AND customer_notice_id = ".(int)$notice['customer_notice_id']);
       
@@ -229,9 +227,9 @@ switch ($action) {
 
       if(xtc_db_num_rows($csn_lng_entr_qu) == 0) {
         $sqlData['customer_notice_id'] = (int)$notice['customer_notice_id'];
-        xtc_db_perform(TABLE_CUSTOMER_NOTICES_DESCRIPTION, $sqlData);
+        xtc_db_perform(TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION, $sqlData);
       } else {
-        xtc_db_perform(TABLE_CUSTOMER_NOTICES_DESCRIPTION, $sqlData, 'update', 'customer_notice_id = '.(int)$notice['customer_notice_id'].' AND languages_id = '.(int)$languages_id);
+        xtc_db_perform(TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION, $sqlData, 'update', 'customer_notice_id = '.(int)$notice['customer_notice_id'].' AND languages_id = '.(int)$languages_id);
       }
     }
 
@@ -245,7 +243,7 @@ switch ($action) {
   // update status
   case 'updatestatus':
     if (key_exists('flag', $_GET) && xtc_not_null($_GET['flag']) && key_exists('nid', $_GET) && xtc_not_null($_GET['nid'])) {
-            $stmt = 'UPDATE ' . TABLE_CUSTOMER_NOTICES . ' ' .
+            $stmt = 'UPDATE ' . TABLE_BX_CUSTOMER_NOTICES . ' ' .
               'SET status = ' . (int) $_GET['flag'] . ' ' .
               'WHERE customer_notice_id = ' . (int) $_GET['nid'];
       xtc_db_query($stmt);
@@ -255,10 +253,10 @@ switch ($action) {
     
   // delete
   case 'delete-confirm': 
-        $stmt = 'DELETE FROM ' . TABLE_CUSTOMER_NOTICES . ' ' .
+        $stmt = 'DELETE FROM ' . TABLE_BX_CUSTOMER_NOTICES . ' ' .
             'WHERE customer_notice_id = ' . (int) $_GET['nid'];
     xtc_db_query($stmt);
-        $stmt = 'DELETE FROM ' . TABLE_CUSTOMER_NOTICES_DESCRIPTION . ' ' .
+        $stmt = 'DELETE FROM ' . TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION . ' ' .
             'WHERE customer_notice_id = ' . (int) $_GET['nid'];
     xtc_db_query($stmt);
         xtc_redirect(xtc_href_link(FILENAME_CUSTOMER_NOTICES, xtc_get_all_get_params(array('nid', 'action', 'flag'))));
@@ -268,7 +266,7 @@ switch ($action) {
   // update position
   case 'posup': 
   case 'posdown': 
-        $stmt = 'UPDATE ' . TABLE_CUSTOMER_NOTICES . ' ' .
+        $stmt = 'UPDATE ' . TABLE_BX_CUSTOMER_NOTICES . ' ' .
             'SET position = position ' . ('posup' == $action ? '+' : '-') . ' 1 ' .
             'WHERE customer_notice_id = ' . (int) $_GET['nid'];
     xtc_db_query($stmt);
@@ -300,20 +298,15 @@ if (in_array($action, array('new', 'edit'))) {
 
 require DIR_WS_INCLUDES . 'head.php';
 
-?>
-<?php
 // Include WYSIWYG if is activated
 if (USE_WYSIWYG == 'true') {
-	$query = xtc_db_query("SELECT code FROM ".TABLE_LANGUAGES." WHERE languages_id='".(int)$_SESSION['languages_id']."'");
-	$data  = xtc_db_fetch_array($query);
-	// generate editor 
-	echo PHP_EOL . (!function_exists('editorJSLink') ? '<script type="text/javascript" src="includes/modules/fckeditor/fckeditor.js"></script>' : '') . PHP_EOL;
-	//if ($_GET['action'] == 'new'  || $_GET['action'] == 'edit')
-	if (in_array($action, array('new', 'edit'))) {
-	  for ($i = 0, $n = sizeof($languages); $i < $n; $i++) {
-      echo xtc_wysiwyg('customer_notices', $data['code'], $languages[$i]['id']);
-	  }
-	}
+  require_once(DIR_FS_INC . 'xtc_wysiwyg.inc.php');
+  if (in_array($action, array('new', 'edit'))) {
+    echo PHP_EOL . (!function_exists('editorJSLink') ? '<script src="includes/modules/ckeditor/ckeditor.js"></script>' : '') . PHP_EOL;
+    for ($i = 0; $i < count($languages); $i++) {
+      echo xtc_wysiwyg('customer_notices', $_SESSION['language_code'], $languages[$i]['id']);
+    }
+  }
 }
 ?>
 </head>
@@ -333,33 +326,78 @@ if (USE_WYSIWYG == 'true') {
         ?>
         <!-- body_text //--> 
         <td class="boxCenter">
-          <div class="pageHeadingImage"><?php echo xtc_image(DIR_WS_ICONS.'heading/nr_customers_notice.png', HEADING_TITLE, '', '', 'style="max-height: 40px;"'); ?></div>
+          <div class="pageHeadingImage"><?php echo xtc_image(DIR_WS_ICONS.'heading/bx_customer_notices.png', HEADING_BX_TITLE, '', '', 'style="max-height: 40px;"'); ?></div>
           <div class="pageHeading flt-l">
-            <?php echo HEADING_TITLE; ?>
-            <div class="main pdg2">
-            <?php 
-            switch ($action) {
-              case 'new':
-                echo HEADING_SUBTITLE_NEW_NOTICE;
-              break;
-              case 'edit':
-                echo sprintf(HEADING_SUBTITLE_EDIT_NOTICE, strip_tags($notice['lang'][$_SESSION['languages_id']]['title']));
-              break;
-              default:
-                echo HEADING_SUBTITLE;
-              break;
-              }
-            ?>
+            <?php echo HEADING_BX_TITLE; ?>
+            <div class="main pdg2"><?php echo HEADING_BX_SUBTITLE; ?>
             </div>
           </div>
 
           <div class="main flt-r pdg2 mrg5" style="margin-left:20px;">
-            Version: <?php echo MODULE_CUSTOMER_NOTICES_VERSION; ?><br>
+            Version: <?php echo MODULE_BX_CUSTOMER_NOTICES_VERSION; ?><br>
             Original version by TimoPaul<br />
-            Contributions: karsta (kgd), noRiddle, benax
+            Contributions: karsta (kgd), noRiddle
           </div>
 
-          <?php if (in_array($action, array('new', 'edit'))) { ?>
+  <?php if (in_array($action, array('new', 'edit'))) { ?>
+  <table class="tableCenter">
+    <tr>
+      <td class="boxCenterLeft">
+        <div id="headboard" style="justify-content: flex-start !important;">
+          <div class="main"><strong>
+            <?php 
+            switch ($action) {
+              case 'new':
+                echo HEADING_BX_SUBTITLE_NEW_NOTICE;
+              break;
+              case 'edit':
+                echo sprintf(HEADING_BX_SUBTITLE_EDIT_NOTICE, strip_tags($notice['lang'][$_SESSION['languages_id']]['title']));
+              break;
+              default:
+                echo HEADING_BX_SUBTITLE_EDIT_NOTICE;
+              break;
+              }
+            ?></strong></div>
+        </div>
+        <?php
+          $update = 1 < count($notice) && key_exists('customer_notice_id', $notice) && '' != trim($notice['customer_notice_id']);
+          echo xtc_draw_form('notice', FILENAME_CUSTOMER_NOTICES, 'action=' . ($update ? 'update' : 'insert'), 'POST') . PHP_EOL;
+          echo xtc_draw_hidden_field('action', ($update ? 'update' : 'insert')) . PHP_EOL;
+          if ($update)
+          {
+            echo xtc_draw_hidden_field('customer_notice_id', (string) $notice['customer_notice_id']) . PHP_EOL;
+          }
+
+
+          echo '</form>' . PHP_EOL;
+        ?>
+
+
+      </td>
+      <td class="boxRight">
+        <?php
+          $heading[]  = array('text' => '<b>' . HEADING_BX_TITLE . '</b>');
+          $contents[] = array('text' => TEXT_NO_CUSTOMER_NOTICES);
+          $box = new box;
+          echo $box->infoBox($heading, $contents);
+        ?>
+      </td>
+    </tr>
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <table class="customer-notices-form-shell">
               <tr>
                 <td class="main">
@@ -551,32 +589,29 @@ if (USE_WYSIWYG == 'true') {
             </table>
           
           <?php } else { ?>
-                      
-<!-- notice table -->
-<div class="main flt-r pdg2 mrg5" style="margin-left:20px;">
-  <?php
-    echo xtc_draw_form('search', FILENAME_CUSTOMER_NOTICES, '', 'get') . HEADING_TITLE_SEARCH . ' ' . xtc_draw_input_field('search', isset($_GET['search']) ? $_GET['search'] : '').'</form>';
-  ?>
-</div>
-
-<div class="main flt-r pdg2 mrg5" style="margin-right:20px;">
-  <?php echo xtc_draw_form('status', FILENAME_CUSTOMER_NOTICES, '', 'get'); ?>
-  <?php
-   $select_data = array(
-        array('id' => '', 'text' => TEXT_ALL),
-        array('id' => '1', 'text' => TEXT_ACTIVE),
-        array('id' => '0', 'text' => TEXT_INACTIVE),
-       );
-      echo HEADING_TITLE_STATUS . ' ';
-      echo xtc_draw_pull_down_menu('status', $select_data, isset($_GET['status']) ? $_GET['status'] : '', 'onChange="this.form.submit();" style="min-width: 150px;"');
-  ?>
-  </form>
-</div>
-
   <table class="tableCenter">
     <tr>
       <td class="boxCenterLeft">
-
+        <div id="headboard">
+          <div class="main"><strong><?php echo TEXT_SEARCH_FILTERS; ?></strong></div>
+          <div class="main">
+            <?php echo xtc_draw_form('status', FILENAME_CUSTOMER_NOTICES, '', 'get'); ?>
+            <?php
+            $select_data = array(
+                  array('id' => '', 'text' => TEXT_ALL),
+                  array('id' => '1', 'text' => TEXT_ACTIVE),
+                  array('id' => '0', 'text' => TEXT_INACTIVE),
+                );
+                echo HEADING_BX_TITLE_STATUS . ' ';
+                echo xtc_draw_pull_down_menu('status', $select_data, isset($_GET['status']) ? $_GET['status'] : '', 'onChange="this.form.submit();" style="min-width: 150px;"').'</form>';
+            ?>
+          </div>
+          <div class="main">
+            <?php
+              echo xtc_draw_form('search', FILENAME_CUSTOMER_NOTICES, '', 'get') . HEADING_BX_TITLE_SEARCH . ' ' . xtc_draw_input_field('search', isset($_GET['search']) ? $_GET['search'] : '').'</form>';
+            ?>
+          </div>
+        </div>
         <table class="tableBoxCenter collapse">
           <tr class="dataTableHeadingRow">
             <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_TXT_ID . xtc_sorting(FILENAME_CUSTOMER_NOTICES, 'customer_notice_id'); ?></td>
@@ -615,8 +650,8 @@ if (USE_WYSIWYG == 'true') {
 
             //secure sql, added int cast to $_SESSION['languages_id'], noRiddle
             $stmt = "SELECT cn.*, cnd.title, cnd.description
-                       FROM ".TABLE_CUSTOMER_NOTICES." cn
-                  LEFT JOIN ".TABLE_CUSTOMER_NOTICES_DESCRIPTION." cnd
+                       FROM ".TABLE_BX_CUSTOMER_NOTICES." cn
+                  LEFT JOIN ".TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION." cnd
                     ON cn.customer_notice_id = cnd.customer_notice_id
                     AND cnd.languages_id = ".(int)$_SESSION['languages_id']
                     .$search
@@ -766,7 +801,7 @@ if (USE_WYSIWYG == 'true') {
   switch ($action) {
     case 'delete':
       if (is_object($cnInfo)) {
-        $heading[]  = array('text' => '<b>' . HEADING_BOX_TITLE_DELETE . '</b>');
+        $heading[]  = array('text' => '<b>' . HEADING_BX_BOX_TITLE_DELETE . '</b>');
         $contents[] = array('text' => sprintf(TEXT_DELETE_NOTICE_CONFIRM, $cnInfo->title)); //$notice
 				$buttons[]  = '<a class="button" onclick="this.blur()" href="' . xtc_href_link(FILENAME_CUSTOMER_NOTICES, xtc_get_all_get_params(array('nid', 'action')) . 'nid=' . $cnInfo->customer_notice_id) . '">' . BUTTON_CANCEL . '</a>';
 				$buttons[]  = '<a class="button" onclick="this.blur()" href="' . xtc_href_link(FILENAME_CUSTOMER_NOTICES, xtc_get_all_get_params(array('nid', 'action')) . 'nid=' . $cnInfo->customer_notice_id . '&action=delete-confirm') . '">' . BUTTON_DELETE_NOTICE_CONFIRMATION . '</a>'; //objectinfo, noRiddle
@@ -780,7 +815,7 @@ if (USE_WYSIWYG == 'true') {
       default:
         if(is_object($cnInfo))
         {
-          $heading[]  = array('text' => '<b>' . sprintf(HEADING_BOX_TITLE_DEFAULT,  $cnInfo->title). '</b>');
+          $heading[]  = array('text' => '<b>' . sprintf(HEADING_BX_BOX_TITLE_DEFAULT,  $cnInfo->title). '</b>');
           $contents[] = array('text' => '<strong>'.LABEL_TXT_STATUS.'</strong> '.(1 == (int) $cnInfo->status ? YES : NO));
           $contents[] = array('text' => '<strong>'.LABEL_TXT_POSITION.'</strong> '.$cnInfo->position);
           $contents[] = array('text' => '<strong>'.LABEL_TXT_STARTDATE.'</strong> '.formatCustomerNoticeDate($cnInfo->startdate));
@@ -838,7 +873,7 @@ if (USE_WYSIWYG == 'true') {
 				echo $box->infoBox($heading, $contents);
 				echo '        </td>' . PHP_EOL;
       } else {
-        $heading[]  = array('text' => '<b>' . HEADING_TITLE . '</b>');
+        $heading[]  = array('text' => '<b>' . HEADING_BX_TITLE . '</b>');
         $contents[] = array('text' => TEXT_NO_CUSTOMER_NOTICES);
 
 				echo '        <td class="boxRight">' . PHP_EOL;

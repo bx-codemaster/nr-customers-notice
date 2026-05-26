@@ -4,13 +4,35 @@
   $customerNoticesIsEdit = isset($action) && in_array($action, array('new', 'edit'));
   $customerNoticesUseLangTabs = $customerNoticesIsEdit && (!defined('USE_ADMIN_LANG_TABS') || USE_ADMIN_LANG_TABS != 'false');
 
-  if (basename($_SERVER['PHP_SELF']) == 'customer_notices.php') {
+  if (basename($_SERVER['PHP_SELF']) == 'bx_customer_notices.php') {
 ?>
 <link rel="stylesheet" href="includes/javascript/jQueryDateTimePicker/jquery.datetimepicker.css">
 <?php if ($customerNoticesUseLangTabs) { ?>
 <link rel="stylesheet" href="includes/lang_tabs_menu/lang_tabs_menu.css">
 <?php } ?>
 <style>
+  #headboard {
+    display: flex; 
+    flex-direction: row; 
+    justify-content: flex-end;
+    width: 100%;
+    align-items: center; 
+    background: #AF417E; 
+    color: #ffffff; 
+    border-radius: 4px; 
+    margin-bottom: 10px; 
+    padding: 4px 0 2px 0;
+    line-height: 30px;
+  }
+
+  #headboard .main {
+    margin: 5px 10px;
+  }
+  
+  #headboard .SumoSelect {
+    color: #000;
+  }
+
   .dataTableHeadingContent:first-child {
     border-left: 1px solid #aaa;
   }

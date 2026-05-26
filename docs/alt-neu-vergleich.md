@@ -1,7 +1,7 @@
 # Vergleich: Ursprungsmodul vs. neues Modul
 
 Stand: 25.05.2026
-Version: 0.3.0
+Version: 1.0.0
 
 Verglichen wurden diese beiden Stände:
 
@@ -58,7 +58,7 @@ Eine der größten Änderungen ist die konsequente Umstellung des Moduls von cus
 ### Betroffene Bereiche
 
 - Admin-Datei: admin/customers_notice.php wurde zu admin/customer_notices.php
-- Tabellenkonstanten: TABLE_CUSTOMERS_NOTICE und TABLE_CUSTOMERS_NOTICE_DESCRIPTION wurden zu TABLE_CUSTOMER_NOTICES und TABLE_CUSTOMER_NOTICES_DESCRIPTION
+- Tabellenkonstanten: TABLE_CUSTOMERS_NOTICE und TABLE_CUSTOMERS_NOTICE_DESCRIPTION wurden zu TABLE_BX_CUSTOMER_NOTICES und TABLE_BX_CUSTOMER_NOTICES_DESCRIPTION
 - Dateinamenkonstanten: FILENAME_CUSTOMERS_NOTICE wurde zu FILENAME_CUSTOMER_NOTICES
 - Frontend-Klasse: CustomersNoticeManager wurde zu CustomerNoticesManager
 - Klassenpfad: includes/external/customers_notice/... wurde zu includes/external/customer_notices/...

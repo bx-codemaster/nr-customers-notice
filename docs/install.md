@@ -8,7 +8,7 @@
 - Möglichkeit ergänzt, Hinweise nach Kundenland zu filtern, Version 0.2.2, 10-2021, noRiddle
 - Möglichkeit ergänzt, Hinweise nach customers_id zu filtern, Version 0.2.3, 01-2022, noRiddle
 - Warnings und Notices bereinigt, Version 0.2.4, 01-2022, noRiddle
-- Überarbeitete benax-Version 0.3.0, 05-2026
+- Überarbeitete benax-Version 1.0.0, 05-2026
 
 ## Zielsystem
 
