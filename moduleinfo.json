@@ -1,10 +1,10 @@
 {
-    "name": "NR Customers Notice",
-    "archiveName": "bx-codemaster/nr-customers-notice",
+    "name": "BX Customer Notices",
+    "archiveName": "bx-codemaster/bx-customer-notices",
     "category": "productivity",
     "developer": "Axel Benkert",
     "developerWebsite": "https://www.bx-coding.de",
-    "website": "https://www.revilonetz.de",
+    "website": "https://www.der-eisenhans.de",
     "srcDir": "src",
     "version": "auto",
     "shortDescription": "Kundeninformations-System! Aktuelle Informationen direkt im Shop anzeigen.",

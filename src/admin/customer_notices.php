@@ -483,7 +483,8 @@ if (USE_WYSIWYG == 'true') {
                                   //BOC new checkbox to check/uncheck all customer groups at once, noRiddle
                                   echo xtc_draw_selection_field('all_cst', 'checkbox', '', '', '', 'id="chck-all-cst"') . ' <label for="chck-all-cst">All</label><br />';
                                   //BOC new checkbox to check/uncheck all customer groups at once, noRiddle
-                                  foreach ($customers_statuses_array as $g) {
+                                  foreach ($customers_statuses_array as $g)
+                                  {
                                     //BOC use label for more comfort when checking checkboxes, noRiddle
                                     //echo xtc_draw_selection_field('customers_status[]', 'checkbox', $g['id'], in_array($g['id'], $notice['customers_status'])) . ' ' . $g['text'] . '<br />';
                                     echo xtc_draw_selection_field('customers_status[]', 'checkbox', $g['id'], in_array($g['id'], $notice['customers_status']), '', 'id="cst-'.$g['id'].'"') . ' <label for="cst-'.$g['id'].'">' . $g['text'] . '</label><br />';
@@ -832,18 +833,18 @@ if (USE_WYSIWYG == 'true') {
       }
       // display box
 			if ( (xtc_not_null($heading)) && (xtc_not_null($contents)) ) {
-				echo '        <td class="boxRight">' . "\n";
+				echo '        <td class="boxRight">' . PHP_EOL;
 				$box = new box;
 				echo $box->infoBox($heading, $contents);
-				echo '        </td>' . "\n";
+				echo '        </td>' . PHP_EOL;
       } else {
         $heading[]  = array('text' => '<b>' . HEADING_TITLE . '</b>');
         $contents[] = array('text' => TEXT_NO_CUSTOMER_NOTICES);
 
-				echo '        <td class="boxRight">' . "\n";
+				echo '        <td class="boxRight">' . PHP_EOL;
 				$box = new box;
 				echo $box->infoBox($heading, $contents);
-				echo '        </td>' . "\n";
+				echo '        </td>' . PHP_EOL;
       }
 ?>
       </tr>
