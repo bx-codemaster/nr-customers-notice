@@ -2,56 +2,23 @@
 {config_load file="lang_`$language`.custom"}
 
 <div class="csn-cont" data-nosnippet>
-    <p id="countdown-{$customer_notice_id}" class="csn-countdown" data-remaining-seconds="{$enddate - $cs_timenow}"></p> {*don't use h1, we style this in customer_notices.css, noRiddle*}
-	{*<h2 class="csn-header">{$title}</h2>*}
-	<div class="csn-body">{$description}
-        {*debug*}
-        {*<p>$enddate: {$enddate} <br /> $cs_timenow: {$cs_timenow} <br />$enddate|date_format: {$enddate|date_format:'%Y-%m-%d %H:%M:%S'}<br />$cs_timenow|date_format: {$cs_timenow|date_format:'%Y-%m-%d %H:%M:%S'}</p>*}
+    <div id="countdown-{$customer_notice_id}"
+         class="csn-countdown tick"
+         data-did-init="csnCustomerNoticeFlipInit"
+         data-remaining-seconds="{$enddate - $cs_timenow}"
+         data-label-days="{#csn_days#}"
+         data-label-hours="{#csn_std#}"
+         data-label-minutes="{#csn_min#}"
+         data-label-seconds="{#csn_sec#}">
+        <div data-repeat="true" data-layout="horizontal center fit" data-transform="preset(d, h, m, s) -> delay">
+            <div class="tick-group">
+                <div data-key="value" data-repeat="true" data-transform="pad(00) -> split -> delay">
+                    <span data-view="flip"></span>
+                </div>
+                <span data-key="label" data-view="text" class="tick-label"></span>
+            </div>
+        </div>
     </div>
+	<div class="csn-header">{$title}</div>
+	<div class="csn-body">{$description}</div>
 </div>
-
-{literal}
-<script>
-    'use strict';
-    
-    (function () {
-        var countdownElement = document.getElementById('countdown-{/literal}{$customer_notice_id}{literal}'),
-            labels = {
-                days: '{/literal}{#csn_days#}{literal}',
-                hours: '{/literal}{#csn_std#}{literal}',
-                minutes: '{/literal}{#csn_min#}{literal}',
-                seconds: '{/literal}{#csn_sec#}{literal}'
-            };
-
-        function formatCountdown(seconds, countdownLabels) {
-            var days = Math.floor(seconds / 86400),
-                hours = Math.floor(seconds / 3600) % 24,
-                minutes = Math.floor(seconds / 60) % 60,
-                secs = seconds % 60,
-                dayText = days > 0 ? days + ' ' + countdownLabels.days + ' ' : '';
-
-            hours = hours < 10 ? '0' + hours : hours;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            secs = secs < 10 ? '0' + secs : secs;
-
-            return dayText + hours + ' ' + countdownLabels.hours + ' ' + minutes + ' ' + countdownLabels.minutes + ' ' + secs + ' ' + countdownLabels.seconds;
-        }
-
-        function updateCountdown(seconds) {
-            if (!countdownElement) {
-                return;
-            }
-
-            countdownElement.textContent = formatCountdown(seconds, labels);
-
-            if (seconds > 0) {
-                window.setTimeout(function () {
-                    updateCountdown(seconds - 1);
-                }, 1000);
-            }
-        }
-
-        updateCountdown(Math.max(0, parseInt(countdownElement.getAttribute('data-remaining-seconds'), 10) || 0));
-    }());
-</script>
-{/literal}
