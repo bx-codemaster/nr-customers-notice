@@ -1,0 +1,123 @@
+.overlay_cn {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.7);
+	transition: opacity 500ms;
+	visibility: visible;
+	opacity: 1;
+	z-index: 1300;
+  }
+.overlay_cn:target {
+	visibility: hidden;
+	opacity: 0;
+	display:none
+  }
+.popup_cn {
+	margin: 50px auto;
+	padding: 20px;
+	background: #fff;
+	border-radius: 5px;
+	width: 70%;
+	position: relative;
+  }
+.popup_cn h2 {
+	margin-top: 0;
+	color: #333;
+	font-family: Tahoma, Arial, sans-serif;
+  }
+.popup_cn .close {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+	transition: all 200ms;
+	font-size: 30px;
+	font-weight: bold;
+	text-decoration: none;
+	color: #333;
+  }
+.popup_cn .close:hover {
+	color: orange;
+  }
+.popup_cn .content {
+	max-height: 30%;
+	overflow: auto;
+  }
+
+/* FlipClock Styles im Template countdown.html */
+.csn-cont {
+	margin: 1.5rem 0;
+  padding: 0.75rem;
+  font-size: 1rem;
+	border: 1px solid #bcc3ca;
+  border-radius: 0.75rem;
+	background: linear-gradient(160deg, #f4f6f8 0%, #e2e6ea 34%, #d4d9de 52%, #e9edf0 78%, #f7f9fb 100%);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), inset 0 -1px 0 rgba(124, 134, 144, 0.2);
+} /*added, noRiddle*/
+
+.csn-countdown {
+	margin: 0 0 1.5rem;
+	padding: 0.75rem 0;
+	display: flex;
+	justify-content: center;
+	overflow-x: auto;
+	overflow-y: hidden;
+	text-align: center;
+}
+
+.csn-countdown.tick {
+	font-size: clamp(0.82rem, 1.7vw, 1.02rem);
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.csn-countdown [data-layout~="horizontal"] {
+	gap: 0.08em;
+}
+
+.csn-countdown .tick-group {
+	min-width: 3.1em;
+	margin: 0 0.18em;
+	text-align: center;
+}
+
+.csn-countdown .tick-flip {
+	margin-left: 0.04em;
+	margin-right: 0.04em;
+	letter-spacing: 0.18em;
+	text-indent: 0.18em;
+}
+
+.csn-countdown .tick-label {
+	display: block !important;
+	margin-top: 0.5em;
+	font-size: 0.42em;
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: 0.04em;
+	white-space: nowrap;
+	text-transform: uppercase;
+}
+
+@media (max-width: 480px) {
+	.csn-countdown.tick {
+		font-size: 0.76rem;
+	}
+
+	.csn-countdown .tick-group {
+		min-width: 2.7em;
+		margin: 0 0.1em;
+	}
+
+	.csn-countdown .tick-label {
+		font-size: 0.48em;
+	}
+}
+
+.csn-header {
+	font-size: 1.2rem;
+	font-weight: 900;
+} /*added, noRiddle*/
+

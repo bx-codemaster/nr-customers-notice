@@ -1,0 +1,24 @@
+{config_load file="$language/lang_$language.conf" section="index"}
+{config_load file="lang_`$language`.custom"}
+
+<div class="csn-cont" data-nosnippet>
+    <div id="countdown-{$customer_notice_id}"
+         class="csn-countdown tick"
+         data-did-init="csnCustomerNoticeFlipInit"
+         data-remaining-seconds="{$enddate - $cs_timenow}"
+         data-label-days="{#csn_days#}"
+         data-label-hours="{#csn_std#}"
+         data-label-minutes="{#csn_min#}"
+         data-label-seconds="{#csn_sec#}">
+        <div data-repeat="true" data-layout="horizontal center fit" data-transform="preset(d, h, m, s) -> delay">
+            <div class="tick-group">
+                <div data-key="value" data-repeat="true" data-transform="pad(00) -> split -> delay">
+                    <span data-view="flip"></span>
+                </div>
+                <span data-key="label" data-view="text" class="tick-label"></span>
+            </div>
+        </div>
+    </div>
+	<div class="csn-header">{$title}</div>
+	<div class="csn-body">{$description}</div>
+</div>
