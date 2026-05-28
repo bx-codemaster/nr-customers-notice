@@ -81,10 +81,10 @@
                 "/includes/external/FlipClock/LICENSE": "9e4935a6fd0efdd53e73ee7da7c5fd8e",
                 "/includes/external/FlipClock/flip.min.css": "e22584bf19e5ecca733b6fe6a5a6d2a2",
                 "/includes/external/FlipClock/flip.min.js": "bbf94c96670e9a40482fb65bab08bec5",
-                "/includes/external/customer_notices/classes/CustomerNoticesManager.class.php": "ba549de45eb1d53d240967539ce0df51",
+                "/includes/external/customer_notices/classes/CustomerNoticesManager.class.php": "0b6833e2148bf8cb42e030b3d58e58b9",
                 "/includes/extra/database_tables/bx_customer_notices.php": "a9291cbb5bfb4875a67aba6752791c8c",
                 "/includes/extra/filenames/bx_customer_notices.php": "5c62b57530573a2276d899d5b73a9bec",
-                "/includes/extra/header/header_body/bx_customer_notices.php": "2b64d1edd47f9afd7ce8c31d7679c527",
+                "/includes/extra/header/header_body/bx_customer_notices.php": "0c44843e7b62639ff1920b81fb4b52f8",
                 "/includes/extra/header/header_head/bx_customer_notices.php": "406a3ed01f0c1bc050d599d2d3aadcd0",
                 "/includes/extra/wysiwyg/bx_customer_notices.php": "492af9a8963f5a5e606694158a68c412",
                 "/lang/english/extra/admin/bx_customer_notices.php": "bcae5c15f9eba499978a52d97aeff8fd",
@@ -93,7 +93,7 @@
                 "/lang/german/modules/system/bx_customer_notices.php": "eff6f44e8c4ea5083c4bbc0996b697af",
                 "/templates/tpl_modified_nova/css/customer_notices.css": "46601bb103981f351adde1b060083ada",
                 "/templates/tpl_modified_nova/module/customer_notices/countdown.html": "881e228d9896c644757346f3a8c1c3d1",
-                "/templates/tpl_modified_nova/module/customer_notices/default.html": "1a5a1717e6dd1c6d0f5152bdb048474f",
+                "/templates/tpl_modified_nova/module/customer_notices/default.html": "1845331df26013aa94cbb393b5889dba",
                 "/templates/tpl_modified_nova/module/customer_notices/newsletter.html": "a79a50c618bbf88fe799cbea30e2fda4"
             }
         },
