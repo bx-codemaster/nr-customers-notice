@@ -101,7 +101,8 @@ if (!function_exists('renderCustomerNoticeActionButton')) {
 
     $form = xtc_draw_form(
       'customer_notice_action_' . (++$formIndex),
-      xtc_href_link(FILENAME_CUSTOMER_NOTICES, xtc_get_all_get_params(array('action', 'nid', 'flag'))),
+      FILENAME_CUSTOMER_NOTICES,
+      xtc_get_all_get_params(array('action', 'nid', 'flag')),
       'post',
       $formAttributes
     );
@@ -238,8 +239,6 @@ switch ($action) {
 
     $notice['startdate'] = ($requestStartdate !== '' ? $requestStartdate : getCustomerNoticeEmptyStartDate());
     $notice['enddate'] = ($requestEnddate !== '' ? $requestEnddate : getCustomerNoticeEmptyEndDate());
-    
-    // format values
     if (!xtc_not_null($notice['position']) || !is_int((int) $notice['position'])) {
       $notice['position'] = 1;
     } elseif (1 > (int) $notice['position']) {
@@ -838,7 +837,9 @@ if (USE_WYSIWYG == 'true') {
       if (is_object($cnInfo)) {
         $noticeTitle = encode_htmlspecialchars((string) $cnInfo->title);
         $heading[]  = array('text' => '<b>' . HEADING_BX_BOX_TITLE_DELETE . '</b>');
-		$contents[] = array('text' => sprintf(TEXT_DELETE_NOTICE_CONFIRM, $noticeTitle)); //$notice
+        
+        $contents[] = array('text' => sprintf(TEXT_DELETE_NOTICE_CONFIRM, $noticeTitle)); //$notice
+        
 				$buttons[]  = '<a class="button" onclick="this.blur()" href="' . xtc_href_link(FILENAME_CUSTOMER_NOTICES, xtc_get_all_get_params(array('nid', 'action')) . 'nid=' . $cnInfo->customer_notice_id) . '">' . BUTTON_CANCEL . '</a>';
 				$buttons[]  = renderCustomerNoticeActionButton(
 				  array('action' => 'delete-confirm', 'nid' => (int) $cnInfo->customer_notice_id),

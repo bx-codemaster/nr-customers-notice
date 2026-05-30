@@ -32,6 +32,11 @@
   #headboard .SumoSelect {
     color: #000;
   }
+  
+  .select2-dropdown {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 12px;
+  }
 
   .dataTableHeadingContent:first-child {
     border-left: 1px solid #aaa;

@@ -154,6 +154,7 @@
 		);
 
 		$this->installCountdownLanguageVariables();
+		$this->installFlipclockLanguageFiles();
 	}
 
 	public function update() {
@@ -304,6 +305,30 @@
 		}
 	}
 
+	private function installFlipclockLanguageFiles(): void {
+		foreach ($this->getFlipclockLanguageFiles() as $file => $contents) {
+			if (is_file($file)) {
+				continue;
+			}
+
+			if (!is_writable(dirname($file))) {
+				continue;
+			}
+
+			file_put_contents($file, rtrim($contents) . PHP_EOL, LOCK_EX);
+		}
+	}
+
+	private function removeFlipclockLanguageFiles(): void {
+		foreach (array_keys($this->getFlipclockLanguageFiles()) as $file) {
+			if (!is_file($file) || !is_writable($file)) {
+				continue;
+			}
+
+			@unlink($file);
+		}
+	}
+
 	private function getCountdownLanguageFiles(): array {
 		$template = $this->getCurrentTemplate();
 
@@ -314,6 +339,13 @@
 		return array(
 			DIR_FS_CATALOG . 'templates/' . $template . '/lang/lang_german.custom' => $this->getCountdownLanguageBlock('german'),
 			DIR_FS_CATALOG . 'templates/' . $template . '/lang/lang_english.custom' => $this->getCountdownLanguageBlock('english'),
+		);
+	}
+
+	private function getFlipclockLanguageFiles(): array {
+		return array(
+			DIR_FS_CATALOG . 'lang/german/flipclock_german.conf' => $this->getFlipclockLanguageBlock('german'),
+			DIR_FS_CATALOG . 'lang/english/flipclock_english.conf' => $this->getFlipclockLanguageBlock('english'),
 		);
 	}
 
@@ -363,6 +395,29 @@
 			. $this->getCountdownLanguageMarkerEnd();
 	}
 
+	private function getFlipclockLanguageBlock(string $language): string {
+		$entries = array(
+			'german' => array(
+				"csn_days = 'Tage'",
+				"csn_std = 'Stunden'",
+				"csn_min = 'Minuten'",
+				"csn_sec = 'Sekunden'",
+			),
+			'english' => array(
+				"csn_days = 'days'",
+				"csn_std = 'hours'",
+				"csn_min = 'minutes'",
+				"csn_sec = 'seconds'",
+			),
+		);
+
+		if (!isset($entries[$language])) {
+			return '';
+		}
+
+		return implode(PHP_EOL, $entries[$language]);
+	}
+
 	private function getCountdownLanguageMarkerStart(): string {
 		return '#BOC customer_notices countdown';
 	}
@@ -379,6 +434,7 @@
 	  
 	public function remove(): void {
 		$this->removeCountdownLanguageVariables();
+		$this->removeFlipclockLanguageFiles();
 
 	  xtc_db_query("DELETE FROM ".TABLE_CONFIGURATION." WHERE configuration_key in ('".implode("', '", $this->keys())."')");
 		xtc_db_query("DELETE FROM ".TABLE_CONFIGURATION_GROUP." WHERE configuration_group_title = 'BX Customer Notices Konfiguration'");
