@@ -238,7 +238,7 @@ switch ($action) {
     }
 
     $notice['startdate'] = ($requestStartdate !== '' ? $requestStartdate : getCustomerNoticeEmptyStartDate());
-    $notice['enddate'] = ($requestEnddate !== '' ? $requestEnddate : getCustomerNoticeEmptyEndDate());
+    $notice['enddate']   = ($requestEnddate !== ''   ? $requestEnddate   : getCustomerNoticeEmptyEndDate());
     if (!xtc_not_null($notice['position']) || !is_int((int) $notice['position'])) {
       $notice['position'] = 1;
     } elseif (1 > (int) $notice['position']) {
@@ -454,7 +454,7 @@ if (USE_WYSIWYG == 'true') {
                     </td>
                     <td class="dataTableConfig col-left"><strong><?php echo LABEL_TXT_POSITION; ?></strong></td>
                     <td class="dataTableConfig col-middle">
-                      <?php echo xtc_draw_input_field('position', (isset($notice['position']) ? $notice['position'] : ''), 'maxlength="3" style="width: 50px; "'); ?>
+                      <?php echo xtc_draw_input_field('position', (isset($notice['position']) ? $notice['position'] : ''), 'maxlength="3" style="width: 50px;"', false, 'number'); ?>
                     </td>
                   </tr>
                   <tr>

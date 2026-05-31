@@ -3,12 +3,12 @@
     "scopes": {
         "shop-root": {
             "hashes": {
-                "/admin/bx_customer_notices.php": "c5712b0a9ef4869f6a6c78b744031b99",
+                "/admin/bx_customer_notices.php": "c465f4ceff23a9df2433dd7091b49fc9",
                 "/admin/images/icons/heading/bx_customer_notices.png": "f2dd28ffa1e9f41fc145ecee083984cf",
                 "/admin/images/icons/karsta.png": "a9ec9d3a68032e136f44b55f4a28f314",
                 "/admin/images/icons/noriddle.png": "998a047929a25554b9bc3efe7f2ab0d9",
                 "/admin/images/icons/timo_paul.png": "4e315d343868f9d8d83cbb75c5b4a25a",
-                "/admin/includes/extra/css/bx_customer_notices.php": "a703b53add6a562466689e939235b7dd",
+                "/admin/includes/extra/css/bx_customer_notices.php": "89236addbde1d55a75e5378ee7dd7325",
                 "/admin/includes/extra/css/select2.min.css": "1160e0dce57c520816145810eec512a4",
                 "/admin/includes/extra/filenames/bx_customer_notices.php": "70ba04a01b353360ca0ef674445e8373",
                 "/admin/includes/extra/functions/bx_customer_notices.php": "bf209dc372c565f48acb432b5ad43505",
@@ -76,8 +76,8 @@
                 "/admin/includes/extra/javascript/i18n/zh-CN.js": "84b61938357be1a4939342be0ed5a987",
                 "/admin/includes/extra/javascript/i18n/zh-TW.js": "bb454041ff15e68c10f5d2f6c37f019c",
                 "/admin/includes/extra/javascript/select2.full.min.js": "3ff6a4728b5def5159c78a21fc3e2592",
-                "/admin/includes/extra/menu/bx_customer_notices.php": "7a11a786d741666cefbffa21b2b95330",
-                "/admin/includes/modules/system/bx_customer_notices.php": "03fd4a5582ef9fb78c3f12ed4c755686",
+                "/admin/includes/extra/menu/bx_customer_notices.php": "058fccb37bfba6c29f7d7e57800563d4",
+                "/admin/includes/modules/system/bx_customer_notices.php": "db76fedad2cf6485df4c27b93b242576",
                 "/includes/external/FlipClock/LICENSE": "9e4935a6fd0efdd53e73ee7da7c5fd8e",
                 "/includes/external/FlipClock/flip.min.css": "e22584bf19e5ecca733b6fe6a5a6d2a2",
                 "/includes/external/FlipClock/flip.min.js": "bbf94c96670e9a40482fb65bab08bec5",

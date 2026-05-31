@@ -29,7 +29,7 @@
 	  $this->description = MODULE_BX_CUSTOMER_NOTICES_DESC;
 	  $this->sort_order  = defined('MODULE_BX_CUSTOMER_NOTICES_SORT_ORDER') ? MODULE_BX_CUSTOMER_NOTICES_SORT_ORDER : 0;
 	  $this->enabled     = ((defined('MODULE_BX_CUSTOMER_NOTICES_STATUS') && MODULE_BX_CUSTOMER_NOTICES_STATUS == 'True') ? true : false);
-		$this->development_status = 'd';
+		$this->development_status = 'p';
   }
 
 	/**
